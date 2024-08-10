@@ -1,28 +1,36 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import "@passageidentity/passage-elements/passage-auth";
+import { ConnectButton, useConnectedWallets } from "thirdweb/react";
+import { createWallet, inAppWallet } from "thirdweb/wallets";
+import { client } from "../client";
+import { download } from "thirdweb/storage";
 
-function Login() {
-  const [isLoading, setIsLoading] = useState(true);
+export default function Login() {
+  const availableWallets = [
+    inAppWallet(),
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    createWallet("me.rainbow"),
+  ];
 
-  useEffect(() => {
-    const loadPassage = async () => {
-      await require("@passageidentity/passage-elements/passage-auth");
-      setIsLoading(false);
-    };
-    loadPassage();
-  }, []);
+  const connectedWallets = useConnectedWallets();
+  console.log(connectedWallets);
+
+  function isConnected() {
+    return connectedWallets.length > 0;
+  }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      {isLoading ? (
-        <span className="loading loading-bars loading-lg"></span>
-      ) : (
-        <passage-auth app-id="1ARdA3uWrOiBBc1vL7l4EQQV"></passage-auth>
+    <div className="text-right m-4">
+      <ConnectButton client={client} wallets={availableWallets} />
+
+      {isConnected() && (
+        <div className="flex items-center justify-center">
+          <form>
+            <input />
+          </form>
+        </div>
       )}
     </div>
   );
 }
-
-export default Login;

@@ -1,11 +1,12 @@
-import Image from "next/image";
+import React from "react";
 import Login from "./Components/Login";
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
-      <button className="btn btn-accent">Accent</button>
       <Login />
     </div>
   );
-}
+};
+
+export default Home;
