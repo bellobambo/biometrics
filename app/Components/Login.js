@@ -4,6 +4,8 @@ import { ConnectButton, useConnectedWallets } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
 import { client } from "../client";
 import { download } from "thirdweb/storage";
+import IPFS from "./IPFS";
+import PinataFiles from "./PinataFiles";
 
 export default function Login() {
   const availableWallets = [
@@ -26,9 +28,8 @@ export default function Login() {
 
       {isConnected() && (
         <div className="flex items-center justify-center">
-          <form>
-            <input />
-          </form>
+          <IPFS />
+          <PinataFiles />
         </div>
       )}
     </div>
