@@ -2,11 +2,11 @@ import { pinata } from "@/app/utils/config";
 import { NextRequest, NextResponse } from "next/server";
 const { v4: uuidv4 } = require("uuid");
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export const dynamic = "force-dynamic";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useRef } from "react";
 
 export default function IPFS() {
@@ -39,6 +37,17 @@ export default function IPFS() {
 
       const uploadData = await uploadRequest.json();
       setCid(uploadData.IpfsHash);
+
+      // Clear input fields and file input
+      setTitle("");
+      setName("");
+      setDateOfBirth("");
+      setMedicalCondition("");
+      setMedications("");
+      setFile(null);
+      if (inputFile.current) {
+        inputFile.current.value = ""; // Clear file input
+      }
     } catch (error) {
       console.error(error);
       alert("Trouble uploading file");

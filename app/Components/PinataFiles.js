@@ -77,19 +77,19 @@ export default function PinataFiles() {
         </div>
       </div>
       <div className="w-full min-h-screen flex items-center justify-center">
-        <div className="bg-white shadow-lg rounded-lg p-8 max-w-3xl w-full">
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-7xl">
           <h2 className="text-2xl text-purple-700 font-semibold mb-6 text-center">
             Medical Report History
           </h2>
           {loading ? (
             <p className="text-center text-purple-700">Loading...</p>
           ) : (
-            <ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {files.map((file) => (
-                <li
+                <div
                   key={file.id}
                   id={`file-${file.id}`}
-                  className="mb-6 bg-purple-200 rounded"
+                  className="bg-purple-200 rounded p-4"
                 >
                   <div className="bg-purple-150 p-4 rounded-lg">
                     <p className="text-purple-700">
@@ -149,9 +149,9 @@ export default function PinataFiles() {
                       Download Medical Report
                     </button>
                   </div>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
       </div>
