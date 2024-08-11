@@ -44,11 +44,11 @@ export async function POST(request) {
     const medicalCondition = data.get("medicalCondition");
     const medications = data.get("medications");
 
-    console.log("Title:", title);
-    console.log("Name:", name);
-    console.log("Date of Birth:", dateOfBirth);
-    console.log("Medical Condition:", medicalCondition);
-    console.log("Medications:", medications);
+    // console.log("Title:", title);
+    // console.log("Name:", name);
+    // console.log("Date of Birth:", dateOfBirth);
+    // console.log("Medical Condition:", medicalCondition);
+    // console.log("Medications:", medications);
 
     const uploadData = await pinata.upload.file(file).addMetadata({
       name: title, // optional

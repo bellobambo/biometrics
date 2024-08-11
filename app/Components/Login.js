@@ -17,7 +17,7 @@ export default function Login() {
   ];
 
   const connectedWallets = useConnectedWallets();
-  console.log(connectedWallets);
+  // console.log(connectedWallets);
 
   function isConnected() {
     return connectedWallets.length > 0;

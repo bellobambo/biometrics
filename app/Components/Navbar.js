@@ -14,7 +14,7 @@ const Navbar = () => {
   ];
 
   const connectedWallets = useConnectedWallets();
-  console.log(connectedWallets);
+  // console.log(connectedWallets);
 
   return (
     <div>
