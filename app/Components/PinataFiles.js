@@ -66,7 +66,7 @@ export default function PinataFiles() {
       <div className="flex justify-between m-3 items-center">
         <div className="my-3">
           <Link
-            className="bg-purple-700 text-white hover:bg-purple-400 p-3 rounded"
+            className="bg-black text-white hover:bg-red-400 p-3 rounded"
             href="/"
           >
             Back
@@ -78,30 +78,30 @@ export default function PinataFiles() {
       </div>
       <div className="w-full min-h-screen flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-7xl">
-          <h2 className="text-2xl text-purple-700 font-semibold mb-6 text-center">
+          <h2 className="text-2xl text-black font-semibold mb-6 text-center">
             Medical Report History
           </h2>
           {loading ? (
-            <p className="text-center text-purple-700">Loading...</p>
+            <p className="text-center text-black">Loading...</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {files.map((file) => (
                 <div
                   key={file.id}
                   id={`file-${file.id}`}
-                  className="bg-purple-200 rounded p-4"
+                  className="bg-red-200 rounded p-4"
                 >
-                  <div className="bg-purple-150 p-4 rounded-lg">
-                    <p className="text-purple-700">
+                  <div className="bg-red-150 p-4 rounded-lg">
+                    <p className="text-black">
                       <strong>Date Created:</strong>{" "}
                       {new Date(file.date_pinned).toLocaleString()}
                     </p>
                     {file.metadata.keyvalues && (
                       <div className="mt-2">
-                        <p className="text-purple-700">
+                        <p className="text-black">
                           <strong>Patient Details:</strong>
                         </p>
-                        <ul className="text-purple-700 bg-white p-2 rounded-lg shadow-inner">
+                        <ul className="text-black bg-white p-2 rounded-lg shadow-inner">
                           {Object.entries(file.metadata.keyvalues).map(
                             ([key, value]) => {
                               let displayKey;
@@ -144,7 +144,7 @@ export default function PinataFiles() {
                     />
                     <button
                       onClick={() => downloadPDF(file)}
-                      className="mt-4 bg-purple-700 text-white py-2 px-4 rounded cursor-pointer hover:bg-purple-400"
+                      className="mt-4 bg-black text-white py-2 px-4 rounded cursor-pointer hover:bg-red-400"
                     >
                       Download Medical Report
                     </button>

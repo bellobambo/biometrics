@@ -25,22 +25,27 @@ export default function Login() {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center my-2">
+      <div className="flex justify-between items-center my-2 mx-2">
         {isConnected() && (
           <Link
-            className="bg-purple-700 text-white hover:bg-purple-400 p-3 rounded text-right"
+            className="bg-black text-white hover:bg-gray-700 p-3 rounded text-right"
             href="/dashboard"
           >
             Medical Report History
           </Link>
         )}
-        <ConnectButton client={client} wallets={availableWallets} />
+
+        <ConnectButton
+          theme="light"
+          client={client}
+          wallets={availableWallets}
+        />
       </div>
-      <div className="flex justify-center items-center flex-col space-y-[20px] text-center my-10">
-        <h2 className="text-2xl text-white font-semibold ">
+      <div className="flex justify-center items-center flex-col space-y-[20px] text-center mt-20 ">
+        <h2 className="text-2xl text-black font-semibold ">
           Welcome To Gbenga's Medical Report Software
         </h2>
-        <img className="mask mask-heart" src="/HEART.jpeg" />
+        <img className="mask mask-heart" src="/gifgif.gif" />
       </div>
       {isConnected() && (
         <div className="flex items-center justify-center flex-col">

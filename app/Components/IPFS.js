@@ -52,30 +52,30 @@ export default function IPFS() {
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
-        <h2 className="text-2xl text-purple-700 font-semibold mb-6 text-center">
+        <h2 className="text-2xl text-black font-semibold mb-6 text-center">
           Create A Medical Report
         </h2>
-        <label htmlFor="title" className="text-left text-purple-700 mb-2">
+        <label htmlFor="title" className="text-left text-black mb-2">
           Title:
         </label>
         <input
           type="text"
-          placeholder="Enter title"
+          placeholder="Dentist Appointment"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 mb-4 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-2 mb-4 border border-black rounded-lg focus:outline-none "
         />
-        <label htmlFor="name" className="text-left text-purple-700 mb-2">
+        <label htmlFor="name" className="text-left text-black mb-2">
           Name:
         </label>
         <input
           type="text"
-          placeholder="Enter name"
+          placeholder="Mr Gbenga"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 mb-4 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-2 mb-4 border border-black rounded-lg focus:outline-none "
         />
-        <label htmlFor="dateOfBirth" className="text-left text-purple-700 mb-2">
+        <label htmlFor="dateOfBirth" className="text-left text-black mb-2">
           Date of Birth:
         </label>
         <input
@@ -83,32 +83,29 @@ export default function IPFS() {
           placeholder="Enter date of birth"
           value={dateOfBirth}
           onChange={(e) => setDateOfBirth(e.target.value)}
-          className="w-full p-2 mb-4 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-2 mb-4 border border-black rounded-lg focus:outline-none "
         />
-        <label
-          htmlFor="medicalCondition"
-          className="text-left text-purple-700 mb-2"
-        >
+        <label htmlFor="medicalCondition" className="text-left text-black mb-2">
           Medical Condition:
         </label>
         <input
           type="text"
-          placeholder="Enter medical condition"
+          placeholder="Toothache"
           value={medicalCondition}
           onChange={(e) => setMedicalCondition(e.target.value)}
-          className="w-full p-2 mb-4 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-2 mb-4 border border-black rounded-lg focus:outline-none "
         />
-        <label htmlFor="medications" className="text-left text-purple-700 mb-2">
+        <label htmlFor="medications" className="text-left text-black mb-2">
           Medications:
         </label>
         <input
           type="text"
-          placeholder="Enter medications"
+          placeholder="Pepsodent Toothpaste"
           value={medications}
           onChange={(e) => setMedications(e.target.value)}
-          className="w-full p-2 mb-4 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-2 mb-4 border border-black rounded-lg focus:outline-none focus:ring-2 "
         />
-        <label htmlFor="file" className="text-left text-purple-700 mb-2">
+        <label htmlFor="file" className="text-left text-black mb-2">
           Upload File:
         </label>
         <input
@@ -116,34 +113,34 @@ export default function IPFS() {
           id="file"
           ref={inputFile}
           onChange={handleChangeFile}
-          className="w-full p-2 mb-4 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-2 mb-4 border border-black rounded-lg focus:outline-none "
         />
         <button
           disabled={uploading}
           onClick={uploadFile}
           className={`w-full py-2 text-white font-semibold rounded-lg ${
             uploading
-              ? "bg-purple-400 cursor-not-allowed"
-              : "bg-purple-600 hover:bg-purple-700"
+              ? "bg-black cursor-not-allowed"
+              : "bg-black hover:bg-gray-700"
           }`}
         >
           {uploading ? "Uploading..." : "Upload"}
         </button>
         {cid && (
-          <div className="mt-8 bg-purple-50 p-4 rounded-lg">
-            <p className="text-purple-700">
+          <div className="mt-8 bg-red-50 p-4 rounded-lg">
+            <p className="text-black">
               <strong>Title:</strong> {title}
             </p>
-            <p className="text-purple-700">
+            <p className="text-black">
               <strong>Name:</strong> {name}
             </p>
-            <p className="text-purple-700">
+            <p className="text-black">
               <strong>Date of Birth:</strong> {dateOfBirth}
             </p>
-            <p className="text-purple-700">
+            <p className="text-black">
               <strong>Medical Condition:</strong> {medicalCondition}
             </p>
-            <p className="text-purple-700">
+            <p className="text-black">
               <strong>Medications:</strong> {medications}
             </p>
             <img
