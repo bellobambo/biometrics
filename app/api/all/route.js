@@ -13,7 +13,7 @@ export async function GET() {
 
     // Fetch all pinned files
     const response = await pinata.pinList({
-      status: "all", // Fetch all items, regardless of their pin status
+      status: "pinned", // Fetch all items, regardless of their pin status
       pageLimit: 1000, // Adjust this as needed
       pageOffset: 0, // Starting point (useful for pagination)
     });

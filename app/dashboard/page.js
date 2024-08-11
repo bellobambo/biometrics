@@ -1,9 +1,12 @@
-"use client";
-
 import React from "react";
+import PinataFiles from "../Components/PinataFiles";
 
 const page = () => {
-  return <div></div>;
+  return (
+    <div>
+      <PinataFiles />
+    </div>
+  );
 };
 
 export default page;

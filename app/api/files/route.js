@@ -39,22 +39,39 @@ export async function POST(request) {
     const data = await request.formData();
     const file = data.get("file");
     const title = data.get("title");
-    const amount = data.get("amount");
+    const name = data.get("name");
+    const dateOfBirth = data.get("dateOfBirth");
+    const medicalCondition = data.get("medicalCondition");
+    const medications = data.get("medications");
 
     console.log("Title:", title);
-    console.log("Amount:", amount);
+    console.log("Name:", name);
+    console.log("Date of Birth:", dateOfBirth);
+    console.log("Medical Condition:", medicalCondition);
+    console.log("Medications:", medications);
 
-    const uploadData = await pinata.upload.file(file, {
-      pinataMetadata: {
-        name: title, // optional
-        keyvalues: {
-          title: title,
-          amount: amount,
-        },
+    const uploadData = await pinata.upload.file(file).addMetadata({
+      name: title, // optional
+      keyValues: {
+        title: title,
+        name: name,
+        dateOfBirth: dateOfBirth,
+        medicalCondition: medicalCondition,
+        medications: medications,
       },
     });
 
-    return NextResponse.json({ ...uploadData, title, amount }, { status: 200 });
+    return NextResponse.json(
+      {
+        ...uploadData,
+        title,
+        name,
+        dateOfBirth,
+        medicalCondition,
+        medications,
+      },
+      { status: 200 }
+    );
   } catch (e) {
     console.log(e);
     return NextResponse.json(
