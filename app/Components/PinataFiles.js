@@ -5,17 +5,24 @@ import Navbar from "./Navbar";
 import Link from "next/link";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas-pro";
+import { useActiveAccount } from "thirdweb/react";
 
 export default function PinataFiles() {
+  const activeAccount = useActiveAccount();
+
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+
+  const walletAddress = activeAccount?.address;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/all");
+        const response = await fetch(`/api/files`);
         const data = await response.json();
-        setFiles(data.rows);
+        setFiles(data); // Ensure `files` is always an array
+        console.log("fetched data", data);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -27,17 +34,22 @@ export default function PinataFiles() {
     fetchData();
   }, []);
 
+  const filteredFiles = files.filter((file) =>
+    file.metadata.keyvalues.name
+      ? file.metadata.keyvalues.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      : false
+  );
+
   const downloadPDF = async (file) => {
     const element = document.getElementById(`file-${file.id}`);
     const button = element.querySelector("button");
 
-    // Hide the download button
     button.style.visibility = "hidden";
 
-    // Override styles if necessary
     element.style.color = "#000"; // Example of overriding text color to black
 
-    // Capture the screenshot with image loading support
     const canvas = await html2canvas(element, {
       useCORS: true, // Ensure CORS is enabled
       allowTaint: true, // Allow cross-origin images
@@ -81,11 +93,22 @@ export default function PinataFiles() {
           <h2 className="text-2xl text-black font-semibold mb-6 text-center">
             Medical Report History
           </h2>
+          <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Search by Patient Name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
           {loading ? (
             <p className="text-center text-black">Loading...</p>
+          ) : filteredFiles.length === 0 ? (
+            <p className="text-center text-black">No files found.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {files.map((file) => (
+              {filteredFiles.map((file) => (
                 <div
                   key={file.id}
                   id={`file-${file.id}`}

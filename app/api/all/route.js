@@ -1,25 +1,36 @@
 // Import required packages
-const pinataSDK = require("@pinata/sdk");
+import { PinataSDK } from "pinata";
 import { NextResponse } from "next/server";
+import { getSharedValue } from "../sharedState";
 
-const pinata = new pinataSDK({ pinataJWTKey: process.env.PINATA_JWT });
 export const dynamic = "force-dynamic";
 
-// Define the GET function to handle GET requests
 export async function GET() {
   try {
-    // Authenticate with Pinata
-    await pinata.testAuthentication();
-
-    // Fetch all pinned files
-    const response = await pinata.pinList({
-      status: "pinned", // Fetch all items, regardless of their pin status
-      pageLimit: 1000, // Adjust this as needed
-      pageOffset: 0, // Starting point (useful for pagination)
+    const pinata = new PinataSDK({
+      pinataJwt: process.env.PINATA_JWT,
+      pinataGateway: process.env.NEXT_PUBLIC_GATEWAY_URL,
     });
 
-    // Return the response data as JSON
-    return NextResponse.json(response, { status: 200 });
+    await pinata.testAuthentication();
+
+    // Retrieve the stored groupId
+    const groupId = getSharedValue();
+
+    console.log("Retrieved groupId:", groupId);
+
+    if (!groupId) {
+      return NextResponse.json(
+        { error: "Group ID not found" },
+        { status: 404 }
+      );
+    }
+
+    const group = await pinata.listFiles().group(groupId);
+
+    // console.log(group, "files in group");
+
+    return NextResponse.json(group, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
