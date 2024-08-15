@@ -118,7 +118,9 @@ export default function PinataFiles() {
           {loading ? (
             <p className="text-center text-black">Loading...</p>
           ) : filteredFiles.length === 0 ? (
-            <p className="text-center text-black">No files found.</p>
+            <p className="text-center text-black">
+              No files found Create A new Report.
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {filteredFiles.map((file) => (
