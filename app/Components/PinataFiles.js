@@ -12,7 +12,7 @@ export default function PinataFiles() {
 
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   const walletAddress = activeAccount?.address;
 
@@ -20,22 +20,21 @@ export default function PinataFiles() {
     const fetchData = async () => {
       try {
         const response = await fetch(`/api/files`);
-        const data = await response.json();
-
-        if (Array.isArray(data)) {
-          setFiles(data);
-        } else {
-          console.error("Unexpected data format received:", data);
-          setFiles([]);
+        if (response.status !== 200) {
+          console.error("Request failed with status:", response.status);
+          setFiles([]); // Set files to an empty array to show "No files found" message
+          setLoading(false);
+          return;
         }
 
-        console.log("Fetched data:", data);
-      } catch (e) {
-        console.error("Error fetching data:", e);
-        setFiles([]);
-        alert("Trouble fetching data");
-      } finally {
+        const data = await response.json();
+        setFiles(data); // Ensure `files` is always an array
+        console.log("fetched data", data);
         setLoading(false);
+      } catch (e) {
+        console.log(e);
+        setLoading(false);
+        alert("Trouble fetching data");
       }
     };
 
@@ -43,7 +42,7 @@ export default function PinataFiles() {
   }, []);
 
   const filteredFiles = files.filter((file) =>
-    file?.metadata?.keyvalues?.name
+    file.metadata.keyvalues.name
       ? file.metadata.keyvalues.name
           .toLowerCase()
           .includes(searchQuery.toLowerCase())
@@ -56,34 +55,29 @@ export default function PinataFiles() {
 
     button.style.visibility = "hidden";
 
-    element.style.color = "#000";
+    element.style.color = "#000"; // Example of overriding text color to black
 
-    try {
-      const canvas = await html2canvas(element, {
-        useCORS: true, // Ensure CORS is enabled
-        allowTaint: true, // Allow cross-origin images
-      });
-      const imgData = canvas.toDataURL("image/png");
+    const canvas = await html2canvas(element, {
+      useCORS: true, // Ensure CORS is enabled
+      allowTaint: true, // Allow cross-origin images
+    });
+    const imgData = canvas.toDataURL("image/png");
 
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "px",
-        format: [canvas.width, canvas.height],
-      });
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "px",
+      format: [canvas.width, canvas.height],
+    });
 
-      // Add image data to the PDF
-      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+    // Add image data to the PDF
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
 
-      const patientName = file?.metadata?.keyvalues?.name || "Medical_Report";
-      pdf.save(`${patientName}_Medical_Report.pdf`);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      alert("An error occurred while generating the PDF.");
-    } finally {
-      // Reset styles and show the button again
-      element.style.color = ""; // Reset to original or default color
-      button.style.visibility = "visible"; // Show the download button again
-    }
+    const patientName = file.metadata.keyvalues.name || "Medical_Report";
+    pdf.save(`${patientName}_Medical_Report.pdf`);
+
+    // Reset styles and show the button again
+    element.style.color = ""; // Reset to original or default color
+    button.style.visibility = "visible"; // Show the download button again
   };
 
   return (
@@ -119,7 +113,7 @@ export default function PinataFiles() {
             <p className="text-center text-black">Loading...</p>
           ) : filteredFiles.length === 0 ? (
             <p className="text-center text-black">
-              No files found Create A new Report.
+              No files found, Create a new Report
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -134,7 +128,7 @@ export default function PinataFiles() {
                       <strong>Date Created:</strong>{" "}
                       {new Date(file.date_pinned).toLocaleString()}
                     </p>
-                    {file?.metadata?.keyvalues && (
+                    {file.metadata.keyvalues && (
                       <div className="mt-2">
                         <p className="text-black">
                           <strong>Patient Details:</strong>
